@@ -51,12 +51,17 @@ void sort       (Matrix& m, int line);
 
 int main(){
 
-    Line l1 = {1, 3, 3};
-    Matrix m = {l1};
+    Line l1 = {3, 4, 1};
+    Line l2 = {1, 5, 3};
+    Line l3 = {9, 8, 9};
+    Matrix m = {l1, l2, l3};
 
     int sum = 0;
 
-    display(lineSum(m));
+    antiDiagSum(sum, m);
+
+    cout << sum;
+
     return EXIT_SUCCESS;
 }
 bool isFull(const Matrix& m) {
@@ -75,37 +80,29 @@ Line lineSum(const Matrix& m){
     }
     return sumLine;
 }
-
+/*
 Line colSum(const Matrix& m){
     Line maxLine;
     maxLine = max_element(m.begin(), m.end(), [](Line a, Line b){ return a.size() < b.size();});
 }
-
+*/
 bool antiDiagSum(int& sum, const Matrix& m){
-	int nbrLine = m.size();
-	int nbreCol = m.at(0).size();
 
-	for(int i = 0; i < nbrLine; ++i){
-		for(int j = 0; j < nbreCol; ++j){
-			sum = m.at(i).at(m.at(i).size() - i - 1);
-		}
-	}
+	for(int i = 0; i < m.size(); ++i)
+		sum += m.at(i).at(m.at(i).size() - i - 1);
 
-	if(!isSquared){
+	if(!isSquared(m))
 		return false;
-	}
 	return true;
 }
 
 bool diagSum(int& sum, const Matrix& m){
 
-	for(int i = 0; i < m.size(); ++i){
-		sum += m.at(i).at(i); 
-	}
+	for(int i = 0; i < m.size(); ++i)
+		sum += m.at(i).at(i);
 
-	if(!isSquared){
+	if(!isSquared(m))
 		return false;
-	}
 	return true;
 }
 
@@ -150,9 +147,11 @@ void shuffle(Matrix& m, int line){
 }
 
 void sort(Matrix& m){
-    sort(m.begin(), m.end(), greater<int>());
+	for(int i = 0; i < m.size(); ++i){
+	    sort(m,i);			
+		sort(m.begin(), m.end());
+		}
 }
-
 
 void sort(Matrix& m, int line){
     sort(m.at(line).begin(), m.at(line).end());
