@@ -51,8 +51,10 @@ void sort       (Matrix& m, int line);
 
 int main(){
 
-    Line l1 = {1, 2, 3};
+    Line l1 = {1, 3, 3};
     Matrix m = {l1};
+
+    int sum = 0;
 
     display(lineSum(m));
     return EXIT_SUCCESS;
@@ -79,6 +81,34 @@ Line colSum(const Matrix& m){
     maxLine = max_element(m.begin(), m.end(), [](Line a, Line b){ return a.size() < b.size();});
 }
 
+bool antiDiagSum(int& sum, const Matrix& m){
+	int nbrLine = m.size();
+	int nbreCol = m.at(0).size();
+
+	for(int i = 0; i < nbrLine; ++i){
+		for(int j = 0; j < nbreCol; ++j){
+			sum = m.at(i).at(m.at(i).size() - i - 1);
+		}
+	}
+
+	if(!isSquared){
+		return false;
+	}
+	return true;
+}
+
+bool diagSum(int& sum, const Matrix& m){
+
+	for(int i = 0; i < m.size(); ++i){
+		sum += m.at(i).at(i); 
+	}
+
+	if(!isSquared){
+		return false;
+	}
+	return true;
+}
+
 void display(const Matrix& m) {
     cout << "[";
     for (const Line& l : m) {
@@ -89,7 +119,6 @@ void display(const Matrix& m) {
     }
     cout << "]";
 }
-
 
 void display(const Line& l) {
     cout << "[";
