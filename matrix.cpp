@@ -204,4 +204,3 @@ void sort(Matrix &m, int line) {
     if(line < m.size())
         sort(m.at(line).begin(), m.at(line).end());
 }
-
